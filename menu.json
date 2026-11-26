@@ -1,0 +1,37 @@
+[
+  {
+    "name": "Margherita",
+    "price": 8.5,
+    "category": "Pizza",
+    "allergens": [
+      "gluten",
+      "milk"
+    ]
+  },
+  {
+    "name": "Carbonara",
+    "price": 12.0,
+    "category": "Pasta",
+    "allergens": [
+      "gluten",
+      "egg",
+      "milk"
+    ]
+  },
+  {
+    "name": "Insalata",
+    "price": 7.0,
+    "category": "Salad",
+    "allergens": []
+  },
+  {
+    "name": "Tiramisu",
+    "price": 6.0,
+    "category": "Dessert",
+    "allergens": [
+      "egg",
+      "milk",
+      "gluten"
+    ]
+  }
+]
