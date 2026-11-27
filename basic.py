@@ -110,6 +110,7 @@ finally:
 # import json file 
 import json
 from pathlib import Path
+from tracemalloc import start
 path = Path("menu.json")
 path.write_text(json.dumps(menu, indent=2))      
 # save
@@ -211,3 +212,26 @@ def batches(items, size):
         yield items[i:i + size]
 for b in batches(list(range(7)), 3):
     print(b)
+    
+
+import asyncio 
+async def call_llm(question: str, seconds: float) -> str:
+    await asyncio.sleep(seconds)          # pretend network call
+    return f"answer to {question!r}"
+async def main():
+    start = time.perf_counter()
+    answers = await asyncio.gather(
+        call_llm("q1", 0.3), call_llm("q2", 0.3), call_llm("q3", 0.3)
+        )
+    print(answers)
+    print(f"total {time.perf_counter() - start:.1f}s (not 0.9s)")
+
+asyncio.run(main())
+
+import logging, os
+logging.basicConfig(level=logging.INFO, format="%(levelname)s | %(name)s | %(message)s")
+log = logging.getLogger("restaurant")
+log.info("Loaded %d dishes", len(menu))
+log.warning("Dish %s has no allergens listed", "Insalata")
+os.environ["APP_ENV"] = "development"            
+print(os.getenv("APP_ENV"), os.getenv("MISSING_KEY", "default-value"))
