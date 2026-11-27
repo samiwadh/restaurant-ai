@@ -108,7 +108,6 @@ finally:
     
     
 # import json file 
-from curses import wrapper
 import json
 from pathlib import Path
 path = Path("menu.json")
@@ -194,4 +193,21 @@ def route(path):
 @route("/hello")
 def hello():
     return {"msg": "hi"}
-print(ROUTES["/hello"]())   
+print(ROUTES["/hello"]())
+
+
+from contextlib import contextmanager
+@contextmanager
+def fake_db_session():
+    print("open session")
+    try:
+        yield {"connected": True}
+    finally:
+        print("close session")
+with fake_db_session() as s:
+    print("using", s)
+def batches(items, size):
+    for i in range(0, len(items), size):
+        yield items[i:i + size]
+for b in batches(list(range(7)), 3):
+    print(b)
